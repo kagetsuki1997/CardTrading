@@ -40,10 +40,13 @@ public class DataLoader implements ApplicationRunner {
 		for(int i=0;i<cardNames.length;i++) {
 			cardService.saveCard(new Card(i+1,cardNames[i]));
 		}
-		User usr=userService.findUserByUserName("root");
+		
+		//test create trade
+		/*User usr=userService.findUserByUserName("root");
 		Card card=cardService.findCardByName("Pikachu");
 		Trade trade=new Trade(usr,"sell",card,37.88,false);
-		tradeService.saveTrade(trade);
+		tradeService.saveTrade(trade);*/
+		
 		Log.info("**DataLoader end**");
 		
 	}
