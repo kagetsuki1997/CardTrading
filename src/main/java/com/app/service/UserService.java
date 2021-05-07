@@ -35,6 +35,10 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userRepository.findByName(userName);
     }
+    
+    public User findUserByUserId(int id) {
+        return userRepository.findById(id);
+    }
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

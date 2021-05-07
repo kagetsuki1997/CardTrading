@@ -27,6 +27,9 @@ public class CardService {
 	public Card findCardByName(String cardName) {
 		return cardRepository.findByName(cardName);
 	}
+	public Card findCardByCardId(int id) {
+		return cardRepository.findById(id);
+	}
 	public Card saveCard(Card card) {
 		Log.info("Save Card "+card.getId()+" "+card.getName());
 		return cardRepository.save(card);
