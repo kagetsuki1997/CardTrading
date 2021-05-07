@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.model.Card;
@@ -40,15 +41,15 @@ public class TradeController {
 		return tradeService.findAll();
 	}
 	
-	@RequestMapping(value="/trade/getByTrader/{id}",method=RequestMethod.GET)
-	public List<Trade> getByTrader(@PathVariable(name="id") int id){
-		User trader=userService.findUserByUserId(id);
+	@RequestMapping(value="/trade/getByTrader",method=RequestMethod.GET)
+	public List<Trade> getByTrader(@RequestParam int traderId){
+		User trader=userService.findUserByUserId(traderId);
 		return tradeService.findByTrader(trader);
 	}
 	
-	@RequestMapping(value="/trade/getByCard/{id}",method=RequestMethod.GET)
-	public List<Trade> getByCard(@PathVariable(name="id") int id){
-		Card card=cardService.findCardByCardId(id);
+	@RequestMapping(value="/trade/getByCard",method=RequestMethod.GET)
+	public List<Trade> getByCard(@RequestParam int cardId){
+		Card card=cardService.findCardByCardId(cardId);
 		return tradeService.findByCard(card);
 	}
 }
