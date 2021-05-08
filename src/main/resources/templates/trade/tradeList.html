@@ -86,10 +86,6 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="/CardTrading/card/add"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>New Card</p>
-								</a></li>
 								<li class="nav-item"><a href="/CardTrading/card/list"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>All Cards</p>
@@ -169,13 +165,13 @@
                       <th style="width: 20%" class="text-center">
                           Card
                       </th>
-                      <th style="width: 20%" class="text-center">
+                      <th style="width: 10%" class="text-center">
                           Price
                       </th>
-                      <th style="width: 10%" class="text-center">
+                      <th style="width: 20%" class="text-center">
                           Create Time
                       </th>
-                      <th style="width: 10%" class="text-center">
+                      <th style="width: 10%" class="text-left">
                           Status
                       </th>
                       <th style="width: 20%">
@@ -231,10 +227,10 @@
 	            cache:false,
 	            dataType :'json',
 	            success: function(data){
-	                 console.log(data);
+	                 //console.log(data);
 	                 $("#tradeList").empty();
 	                 for(var i=0;i<data.length;i++){
-	                	 console.log(data[i]);
+	                	 //console.log(data[i]);
 	                	 var tr="<tr><td  class='text-center'>"+i+"</td>";
 	                	 tr+="<td  class='text-center'>"+data[i].id+"</td>";
 	                	 var action="<span class='badge badge-danger'>Buy</span>";
@@ -246,15 +242,18 @@
 	                	 tr+="<td  class='text-center'>"+data[i].price+"</td>";
 	                	 tr+="<td  class='text-center'>"+data[i].createTime+"</td>";
 	                	 var completed="<span class='badge badge-secondary'>Uncompleted</span>";
-	                	 if(data[i].completed)
+	                	 if(data[i].completed){
 	                		 completed="<span class='badge badge-success'>Completed</span>"
-	                	 tr+="<td  class='text-center'>"+completed+"</td>";
-	                	 tr+="<td class='text-right'>"
-                         	+"<a class='btn btn-primary btn-sm' href='#'>"
-                         	+"<i class='fas fa-folder'>"
-                         	+"</i>"
-                         	+"  View"
-                         	+"</a></td></tr>";
+	                		 tr+="<td  class='text-left'>"+completed+"</td>";
+	                		 tr+="<td class='text-right'>"
+	                		 +"<a class='btn btn-primary btn-sm' href='#'>"
+	                		 +"<i class='fas fa-folder'>"
+	                		 +"</i>"
+	                		 +"  View"
+	                		 +"</a></td></tr>";
+	                	 }
+	                	 else
+	                		 tr+="<td  class='text-left'>"+completed+"</td>";
                          $("#tradeList").append(tr);	
 	                 }
 	           }

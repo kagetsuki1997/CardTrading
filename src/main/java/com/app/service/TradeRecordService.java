@@ -2,6 +2,11 @@ package com.app.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +48,14 @@ public class TradeRecordService {
 		int page=0,size=pageSize;
 		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
 		return tradeRecordRepository.findByTradeCard(card, pageable);
+	}
+	@Transactional
+	public TradeRecord saveTradeRecord(Trade sellTrade,Trade buyTrade,Double soldPrice) {
+		if(!sellTrade.isCompleted()&&!buyTrade.isCompleted()) {
+			TradeRecord tradeRecord=new TradeRecord(sellTrade.getTrader(), buyTrade.getTrader(), buyTrade.getTradeCard(), soldPrice, sellTrade, buyTrade);
+			Log.info("Save TradeRecord:"+sellTrade.getTrader().getName()+" "+buyTrade.getTrader().getName()+" "+buyTrade.getTradeCard().getName()+" "+soldPrice);
+			return tradeRecordRepository.save(tradeRecord);
+		}else
+			return null;
 	}
 }

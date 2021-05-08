@@ -56,5 +56,14 @@ public class TradeRecord {
 	@CreationTimestamp
 	@Column(name = "completeTime")
 	private Date completeTime;
+	
+	public TradeRecord(User seller,User buyer,Card tradeCard,Double soldPrice,Trade sellTrade,Trade buyTrade) {
+		this.seller=seller;
+		this.buyer=buyer;
+		this.tradeCard=tradeCard;
+		this.soldPrice=soldPrice;
+		this.sellTrade=sellTrade;
+		this.buyTrade=buyTrade;
+	}
 
 }

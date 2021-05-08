@@ -46,7 +46,7 @@ public class TradeController {
 	@RequestMapping(value="/trade/getAll",method=RequestMethod.GET)
 	@ResponseBody
 	public List<Trade> getAllTrade(){
-		return tradeService.findAll();
+		return tradeService.findTop();
 	}
 	
 	@RequestMapping(value="/trade/getByTrader",method=RequestMethod.GET)

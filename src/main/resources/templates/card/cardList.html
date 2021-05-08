@@ -121,30 +121,52 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Main content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<!-- Default box -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">Welcome to Card Trading Center!</h3>									
-								</div>
-								<div class="card-body">
-									Hi, <span th:utext="${userName}"></span>!									
-								</div>
-								<!-- /.card-body -->
-								<div class="card-footer"></div>
-								<!-- /.card-footer-->
-							</div>
-							<!-- /.card -->
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- /.content -->
-		</div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>All Cards</h1>
+          </div>          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">All Cards</h3>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%" class="text-center">
+                          #
+                      </th>
+                      <th style="width: 5%" class="text-center">
+                          id
+                      </th>
+                      <th style="width: 5%" class="text-center">
+                          Name
+                      </th>                      
+                  </tr>
+              </thead>
+              <tbody id="cardList">
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
 		<!-- /.content-wrapper -->
 
 		<footer class="main-footer">
@@ -172,5 +194,38 @@
 	<script src="/AdminLTE3/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/AdminLTE3/dist/js/demo.js"></script>
+	<script>
+		$( document ).ready(function() {
+	    	loadCardList();
+		});
+		var loadCardList=function(){
+			$.ajax({
+	            type: "GET",
+	            url: '/api/card/getAll',
+	            cache:false,
+	            dataType :'json',
+	            success: function(data){
+	                 //console.log(data);
+	                 $("#cardList").empty();
+	                 for(var i=0;i<data.length;i++){
+	                	 //console.log(data[i]);
+	                	 var tr="<tr><td  class='text-center'>"+i+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].id+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].name+"</td>";
+	                	 tr+="<td class='text-right'>"
+	                		 +"<a class='btn btn-primary btn-sm' href='/CardTrading/card/tradeList?cardId="
+	                		 +data[i].id
+	                		 +"'>"
+	                		 +"<i class='fas fa-folder'>"
+	                		 +"</i>"
+	                		 +"  Trade List"
+	                		 +"</a></td></tr>";
+                         $("#cardList").append(tr);	
+	                 }
+	           }
+	    	});			
+		}
+		
+	</script>
 </body>
 </html>

@@ -86,10 +86,6 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="/CardTrading/card/add"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>New Card</p>
-								</a></li>
 								<li class="nav-item"><a href="/CardTrading/card/list"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>All Cards</p>
@@ -220,9 +216,9 @@
 	            cache:false,
 	            dataType :'json',
 	            success: function(data){
-	                 console.log(data);
+	                 //console.log(data);
 	                 for(var i=0;i<data.length;i++){
-	                	 console.log(data[i]);
+	                	 //console.log(data[i]);
 	                	 var option="<option value="+data[i].id+">"+data[i].name+"</option>";
                          $("#tradeCard").append(option);	
 	                 }

@@ -121,30 +121,74 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Main content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<!-- Default box -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">Welcome to Card Trading Center!</h3>									
-								</div>
-								<div class="card-body">
-									Hi, <span th:utext="${userName}"></span>!									
-								</div>
-								<!-- /.card-body -->
-								<div class="card-footer"></div>
-								<!-- /.card-footer-->
-							</div>
-							<!-- /.card -->
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- /.content -->
-		</div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Top 50 trades of <span th:utext="${cardName}"></span></h1>
+          </div>          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"></h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" onclick="loadTradeList()" name="refresh" title="Refresh">
+              <i class="fas fa-sync"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%" class="text-center">
+                          #
+                      </th>
+                      <th style="width: 5%" class="text-center">
+                          id
+                      </th>
+                      <th style="width: 5%" class="text-center">
+                          Action
+                      </th>
+                      <th style="width: 20%" class="text-center">
+                          Trader
+                      </th>
+                      <th style="width: 20%" class="text-center">
+                          Card
+                      </th>
+                      <th style="width: 10%" class="text-center">
+                          Price
+                      </th>
+                      <th style="width: 20%" class="text-center">
+                          Create Time
+                      </th>
+                      <th style="width: 10%" class="text-left">
+                          Status
+                      </th>
+                      <th style="width: 20%">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody id="tradeList">
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
 		<!-- /.content-wrapper -->
 
 		<footer class="main-footer">
@@ -172,5 +216,50 @@
 	<script src="/AdminLTE3/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/AdminLTE3/dist/js/demo.js"></script>
+	<script>
+		$( document ).ready(function() {
+	    	loadTradeList();
+		});
+		var loadTradeList=function(){
+			$.ajax({
+	            type: "GET",
+	            url: '/api/trade/getByCard?cardId='+"[[${cardId}]]",
+	            cache:false,
+	            dataType :'json',
+	            success: function(data){
+	                 //console.log(data);
+	                 $("#tradeList").empty();
+	                 for(var i=0;i<data.length;i++){
+	                	 //console.log(data[i]);
+	                	 var tr="<tr><td  class='text-center'>"+i+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].id+"</td>";
+	                	 var action="<span class='badge badge-danger'>Buy</span>";
+	                	 if(data[i].action=="sell")
+	                		 action="<span class='badge badge-primary'>Sell</span>";
+	                	 tr+="<td  class='text-center'>"+action+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].trader.name+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].tradeCard.name+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].price+"</td>";
+	                	 tr+="<td  class='text-center'>"+data[i].createTime+"</td>";
+	                	 var completed="<span class='badge badge-secondary'>Uncompleted</span>";
+	                	 if(data[i].completed){
+	                		 completed="<span class='badge badge-success'>Completed</span>"
+	                		 tr+="<td  class='text-left'>"+completed+"</td>";
+	                		 tr+="<td class='text-right'>"
+	                		 +"<a class='btn btn-primary btn-sm' href='#'>"
+	                		 +"<i class='fas fa-folder'>"
+	                		 +"</i>"
+	                		 +"  View"
+	                		 +"</a></td></tr>";
+	                	 }
+	                	 else
+	                		 tr+="<td  class='text-left'>"+completed+"</td>";
+                         $("#tradeList").append(tr);	
+	                 }
+	           }
+	    	});			
+		}
+		
+	</script>
 </body>
 </html>

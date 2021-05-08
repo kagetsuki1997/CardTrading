@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +34,9 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+	
+	@Version
+	private Long version=null;
 	
 	@ManyToOne
 	@JoinColumn(name = "traderId")
@@ -50,15 +56,17 @@ public class Trade {
 	@Column(name = "createTime")
 	private Date createTime;
 	
-	@UpdateTimestamp
-	@Column(name = "updateTime")
-	private Date updateTime;
 	
 	@Column(name ="completeTime")
 	private Date completeTime;
 	
 	@Column(name = "isCompleted")
 	private boolean isCompleted;
+	
+	@ManyToOne
+	@JoinColumn(name="recordId")
+	@JsonIgnore
+	private TradeRecord tradeRecord; 
 	
 	public Trade(User trader,String action,Card tradeCard,Double price,boolean isCompleted) {
 		this.trader=trader;
