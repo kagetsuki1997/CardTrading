@@ -32,8 +32,6 @@ public class TradeService {
 	private TradeRepository tradeRepository;
 	@Autowired
 	private TradeRecordService tradeRecordService;
-	@PersistenceContext
-	private EntityManager entityManager;
 
 	@Autowired
 	public TradeService(TradeRepository tradeRepository) {
