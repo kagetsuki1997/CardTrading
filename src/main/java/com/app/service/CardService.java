@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class CardService {
 	public Card findCardByName(String cardName) {
 		return cardRepository.findByName(cardName);
 	}
-	public Card findCardByCardId(int id) {
+	public Optional<Card> findCardByCardId(Long id) {
 		return cardRepository.findById(id);
 	}
 	public Card saveCard(Card card) {

@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,7 +37,7 @@ public class UserService {
         return userRepository.findByName(userName);
     }
     
-    public User findUserByUserId(int id) {
+    public Optional<User> findUserByUserId(Long id) {
         return userRepository.findById(id);
     }
 

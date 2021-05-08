@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,8 +35,6 @@ public class TradeController {
 	@RequestMapping(value="/trade/add",method=RequestMethod.POST)
 	@ResponseBody
 	public String trade(Trade trade) {
-		auth = SecurityContextHolder.getContext().getAuthentication();
-		trade.setTrader(userService.findUserByUserName(auth.getName()));
 		if(trade.getAction().equals("sell")||trade.getAction().equals("buy")) {
 			tradeService.saveTrade(trade);
 			return "success";
@@ -52,15 +51,15 @@ public class TradeController {
 	
 	@RequestMapping(value="/trade/getByTrader",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Trade> getByTrader(@RequestParam int traderId){
-		User trader=userService.findUserByUserId(traderId);
-		return tradeService.findByTrader(trader);
+	public List<Trade> getByTrader(@RequestParam Long traderId){
+		Optional<User> trader=userService.findUserByUserId(traderId);
+		return tradeService.findByTrader(trader.get());
 	}
 	
 	@RequestMapping(value="/trade/getByCard",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Trade> getByCard(@RequestParam int cardId){
-		Card card=cardService.findCardByCardId(cardId);
-		return tradeService.findByCard(card);
+	public List<Trade> getByCard(@RequestParam Long cardId){
+		Optional<Card> card=cardService.findCardByCardId(cardId);
+		return tradeService.findByCard(card.get());
 	}
 }
