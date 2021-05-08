@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -48,6 +49,9 @@ public class TradeRecordService {
 		int page=0,size=pageSize;
 		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
 		return tradeRecordRepository.findByTradeCard(card, pageable);
+	}
+	public Optional<TradeRecord> findByTradeRecordId(Long id) {
+		return tradeRecordRepository.findById(id);
 	}
 	@Transactional
 	public TradeRecord saveTradeRecord(Trade sellTrade,Trade buyTrade,Double soldPrice) {

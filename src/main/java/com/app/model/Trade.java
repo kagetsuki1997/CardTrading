@@ -16,7 +16,9 @@ import javax.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "trade")
+
 public class Trade {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,10 +66,8 @@ public class Trade {
 	@Column(name = "isCompleted")
 	private boolean isCompleted;
 	
-	@ManyToOne
-	@JoinColumn(name="recordId")
-	@JsonIgnore
-	private TradeRecord tradeRecord; 
+	@Column(name="tradeRecordId")
+	private Long tradeRecordId; 
 	
 	public Trade(User trader,String action,Card tradeCard,Double price,boolean isCompleted) {
 		this.trader=trader;

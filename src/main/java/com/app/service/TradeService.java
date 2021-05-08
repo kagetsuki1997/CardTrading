@@ -90,10 +90,10 @@ public class TradeService {
 				if (tradeRecord != null) {
 					trade.setCompleted(true);
 					trade.setCompleteTime(tradeRecord.getCompleteTime());
-					trade.setTradeRecord(tradeRecord);
+					trade.setTradeRecordId(tradeRecord.getId());
 					targetTrade.setCompleted(true);
 					targetTrade.setCompleteTime(tradeRecord.getCompleteTime());
-					targetTrade.setTradeRecord(tradeRecord);
+					targetTrade.setTradeRecordId(tradeRecord.getId());
 					saveTrade(trade);
 					saveTrade(targetTrade);
 				}
@@ -115,10 +115,10 @@ public class TradeService {
 		if (tradeRecord != null) {
 			trade.setCompleted(true);
 			trade.setCompleteTime(tradeRecord.getCompleteTime());
-			trade.setTradeRecord(tradeRecord);
+			trade.setTradeRecordId(tradeRecord.getId());
 			targetTrade.setCompleted(true);
 			targetTrade.setCompleteTime(tradeRecord.getCompleteTime());
-			targetTrade.setTradeRecord(tradeRecord);
+			targetTrade.setTradeRecordId(tradeRecord.getId());
 			trade=saveTrade(trade);
 			saveTrade(targetTrade);
 		}
@@ -127,7 +127,7 @@ public class TradeService {
 
 	public Trade findASellTrade(Trade trade) {
 		Trade targetTrade = null;
-		List<Trade> buyTradeList = tradeRepository.findBuyTrade(trade.getId(), trade.getTradeCard().getId(),
+		List<Trade> buyTradeList = tradeRepository.findBuyTrade(trade.getTrader().getId(), trade.getTradeCard().getId(),
 				trade.getPrice());
 		if (!buyTradeList.isEmpty()) {
 			targetTrade = buyTradeList.get(0);
@@ -137,7 +137,7 @@ public class TradeService {
 
 	public Trade findABuyTrade(Trade trade) {
 		Trade targetTrade = null;
-		List<Trade> sellTradeList = tradeRepository.findSellTrade(trade.getId(), trade.getTradeCard().getId(),
+		List<Trade> sellTradeList = tradeRepository.findSellTrade(trade.getTrader().getId(), trade.getTradeCard().getId(),
 				trade.getPrice());
 		if (!sellTradeList.isEmpty()) {
 			targetTrade = sellTradeList.get(0);

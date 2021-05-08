@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.app.model.Card;
 import com.app.model.Trade;
+import com.app.model.TradeRecord;
 import com.app.model.User;
 import com.app.service.CardService;
+import com.app.service.TradeRecordService;
 import com.app.service.TradeService;
 import com.app.service.UserService;
 
@@ -30,6 +32,8 @@ public class MainController {
 	private UserService userService;
 	@Autowired
 	private CardService cardService;
+	@Autowired
+	private TradeRecordService tradeRecordService;
 
 	@RequestMapping("/")
 	public ModelAndView rootRedirect() {
@@ -73,6 +77,18 @@ public class MainController {
         User user=userService.findUserByUserName(auth.getName());
         modelAndView.addObject("userId", user.getId());
         modelAndView.setViewName("trade/tradeAdd");
+        return modelAndView;
+    }
+	@RequestMapping("/CardTrading/trade/detail")
+	public ModelAndView tradeDetail(@RequestParam Long tradeRecordId){
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		TradeRecord tradeRecord=tradeRecordService.findByTradeRecordId(tradeRecordId).get();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tradeRecord",tradeRecord);
+        modelAndView.addObject("userName", auth.getName());
+        User user=userService.findUserByUserName(auth.getName());
+        modelAndView.addObject("userId", user.getId());
+        modelAndView.setViewName("trade/tradeDetail");
         return modelAndView;
     }
 	@RequestMapping("/CardTrading/card/list")

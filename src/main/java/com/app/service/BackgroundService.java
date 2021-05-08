@@ -15,7 +15,11 @@ public class BackgroundService {
 	
 	@Scheduled(fixedRateString="${backgroundMakeAllDealInterval}")
     public void backgroundMakeAllDeal() {
-		Log.info("--Background MakeAllDeal");
-		tradeService.makeAllDeal();
+		//Log.info("--Background MakeAllDeal");
+		try {
+			tradeService.makeAllDeal();
+		}catch(Exception e) {
+			Log.error(e.getMessage());
+		}
     }
 }
