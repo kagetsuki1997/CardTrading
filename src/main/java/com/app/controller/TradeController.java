@@ -3,11 +3,14 @@ package com.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.model.Card;
@@ -18,7 +21,9 @@ import com.app.service.TradeService;
 import com.app.service.UserService;
 
 @Controller
+@RequestMapping("/api")
 public class TradeController {
+	private Authentication auth;
 	@Autowired
 	private TradeService tradeService;
 	@Autowired
@@ -26,8 +31,11 @@ public class TradeController {
 	@Autowired
 	private CardService cardService;
 	
-	@RequestMapping(value="/trade/trading",method=RequestMethod.POST)
+	@RequestMapping(value="/trade/add",method=RequestMethod.POST)
+	@ResponseBody
 	public String trade(Trade trade) {
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		trade.setTrader(userService.findUserByUserName(auth.getName()));
 		if(trade.getAction().equals("sell")||trade.getAction().equals("buy")) {
 			tradeService.saveTrade(trade);
 			return "success";
@@ -37,17 +45,20 @@ public class TradeController {
 	}
 	
 	@RequestMapping(value="/trade/getAll",method=RequestMethod.GET)
+	@ResponseBody
 	public List<Trade> getAllTrade(){
 		return tradeService.findAll();
 	}
 	
 	@RequestMapping(value="/trade/getByTrader",method=RequestMethod.GET)
+	@ResponseBody
 	public List<Trade> getByTrader(@RequestParam int traderId){
 		User trader=userService.findUserByUserId(traderId);
 		return tradeService.findByTrader(trader);
 	}
 	
 	@RequestMapping(value="/trade/getByCard",method=RequestMethod.GET)
+	@ResponseBody
 	public List<Trade> getByCard(@RequestParam int cardId){
 		Card card=cardService.findCardByCardId(cardId);
 		return tradeService.findByCard(card);

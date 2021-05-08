@@ -42,6 +42,6 @@ public class TradeRecordService {
 	public List<TradeRecord> findByCard(Card card){
 		int page=0,size=pageSize;
 		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
-		return tradeRecordRepository.findByCard(card, pageable);
+		return tradeRecordRepository.findByTradeCard(card, pageable);
 	}
 }

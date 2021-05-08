@@ -16,6 +16,6 @@ import com.app.model.User;
 public interface TradeRecordRepository extends JpaRepository<TradeRecord, Integer>{
 	@Query(value="select * from TradeRecord where sellerId=%?1 or buyerId=%?1",nativeQuery=true)
 	List<TradeRecord> findByTrader(int traderId,Pageable pageable);
-	List<TradeRecord> findByCard(Card Card,Pageable pageable);
+	List<TradeRecord> findByTradeCard(Card Card,Pageable pageable);
 }
 

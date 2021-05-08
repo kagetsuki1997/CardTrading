@@ -13,5 +13,5 @@ import com.app.model.User;
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Integer>{
 	List<Trade> findByTrader(User trader,Pageable pageable);
-	List<Trade> findByCard(Card Card,Pageable pageable);
+	List<Trade> findByTradeCard(Card Card,Pageable pageable);
 }

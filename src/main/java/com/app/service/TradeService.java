@@ -43,7 +43,7 @@ public class TradeService {
 	public List<Trade> findByCard(Card card){
 		int page=0,size=pageSize;
 		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
-		return tradeRepository.findByCard(card, pageable);
+		return tradeRepository.findByTradeCard(card, pageable);
 	}
 	
 	public Trade saveTrade(Trade trade) {
