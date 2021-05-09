@@ -1,5 +1,7 @@
 package com.app;
 
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class DataLoader implements ApplicationRunner {
 	@Value("${cards.default}")
 	private String cardsDefaultStr;
 	
+	
 	private CardService cardService;
 	@Autowired
 	private TradeService tradeService;
@@ -38,16 +41,22 @@ public class DataLoader implements ApplicationRunner {
 		Log.info("**DataLoader start**");
 		String[] cardNames=cardsDefaultStr.split(",");
 		for(int i=0;i<cardNames.length;i++) {
-			cardService.saveCard(new Card(i+1,cardNames[i]));
+			cardService.saveCard(new Card(i+1l,cardNames[i]));
 		}
 		
 		//test create trade
-		/*User usr=userService.findUserByUserName("root");
-		Card card=cardService.findCardByName("Pikachu");
-		Trade trade=new Trade(usr,"sell",card,37.88,false);
-		tradeService.saveTrade(trade);*/
-		
+//		User usr=userService.findUserByUserName("root");
+//		Card card=cardService.findCardByName("Pikachu");
+//		Trade trade=new Trade(usr,"sell",card,37.88,false);
+//		tradeService.saveTrade(trade);
 		Log.info("**DataLoader end**");
+//		while(runGoRun) {
+//			Thread.sleep(interval*1000);
+//			Log.info("--Background MakeAllDeal");
+//			tradeService.makeAllDeal();
+//		}
+		
+		
 		
 	}
 
