@@ -1,7 +1,6 @@
 package com.app.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,11 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,47 +27,46 @@ import lombok.NoArgsConstructor;
 @Table(name = "trade")
 
 public class Trade {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-	
-	@Version
-	private Long version=null;
-	
-	@ManyToOne
-	@JoinColumn(name = "traderId")
-	private User trader;
-	
-	@Column(name = "action")
-	private String action;
-	
-	@ManyToOne
-	@JoinColumn(name = "cardId")
-	private Card tradeCard;
-	
-	@Column(name = "price")
-	private Double price;
-	
-	@CreationTimestamp
-	@Column(name = "createTime")
-	private Date createTime;
-	
-	
-	@Column(name ="completeTime")
-	private Date completeTime;
-	
-	@Column(name = "isCompleted")
-	private boolean isCompleted;
-	
-	@Column(name="tradeRecordId")
-	private Long tradeRecordId; 
-	
-	public Trade(User trader,String action,Card tradeCard,Double price,boolean isCompleted) {
-		this.trader=trader;
-		this.action=action;
-		this.tradeCard=tradeCard;
-		this.price=price;
-		this.isCompleted=isCompleted;
-	}
+
+    @Version
+    private Long version = null;
+
+    @ManyToOne
+    @JoinColumn(name = "traderId")
+    private User trader;
+
+    @Column(name = "action")
+    private String action;
+
+    @ManyToOne
+    @JoinColumn(name = "cardId")
+    private Card tradeCard;
+
+    @Column(name = "price")
+    private Double price;
+
+    @CreationTimestamp
+    @Column(name = "createTime")
+    private Date createTime;
+
+    @Column(name = "completeTime")
+    private Date completeTime;
+
+    @Column(name = "isCompleted")
+    private boolean isCompleted;
+
+    @Column(name = "tradeRecordId")
+    private Long tradeRecordId;
+
+    public Trade(User trader, String action, Card tradeCard, Double price, boolean isCompleted) {
+        this.trader = trader;
+        this.action = action;
+        this.tradeCard = tradeCard;
+        this.price = price;
+        this.isCompleted = isCompleted;
+    }
 }

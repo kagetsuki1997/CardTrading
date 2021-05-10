@@ -22,40 +22,24 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-                auth
-                    .userDetailsService(userDetailsService)
-                    .passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.
-                authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/**").authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/CardTrading/home")
-                .usernameParameter("name")
-                .passwordParameter("password")
-                .permitAll()
-                .and().logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+        http.authorizeRequests().antMatchers("/login").permitAll().antMatchers("/registration").permitAll()
+                .antMatchers("/**").authenticated().and().formLogin().loginPage("/login")
+                .failureUrl("/login?error=true").defaultSuccessUrl("/CardTrading/home").usernameParameter("name")
+                .passwordParameter("password").permitAll().and().logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/login").and().exceptionHandling().accessDeniedPage("/access-denied");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-        .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/AdminLTE3/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/AdminLTE3/**");
     }
 
 }

@@ -13,27 +13,30 @@ import com.app.repository.CardRepository;
 
 @Service
 public class CardService {
-	private static Logger Log=LoggerFactory.getLogger(CardService.class);
-	
-	private CardRepository cardRepository;
-	
-	@Autowired
-	public CardService(CardRepository cardRepository) {
-		this.cardRepository=cardRepository;
-	}
-	
-	public List<Card> findAll(){
-		return cardRepository.findAll();
-	}
-	public Card findCardByName(String cardName) {
-		return cardRepository.findByName(cardName);
-	}
-	public Optional<Card> findCardByCardId(Long id) {
-		return cardRepository.findById(id);
-	}
-	public Card saveCard(Card card) {
-		Log.info("Save Card "+card.getId()+" "+card.getName());
-		return cardRepository.save(card);
-	}
+    private static Logger Log = LoggerFactory.getLogger(CardService.class);
+
+    private CardRepository cardRepository;
+
+    @Autowired
+    public CardService(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
+    }
+
+    public List<Card> findAll() {
+        return cardRepository.findAll();
+    }
+
+    public Card findCardByName(String cardName) {
+        return cardRepository.findByName(cardName);
+    }
+
+    public Optional<Card> findCardByCardId(Long id) {
+        return cardRepository.findById(id);
+    }
+
+    public Card saveCard(Card card) {
+        Log.info("Save Card " + card.getId() + " " + card.getName());
+        return cardRepository.save(card);
+    }
 
 }

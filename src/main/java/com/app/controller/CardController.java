@@ -14,17 +14,12 @@ import com.app.service.CardService;
 @Controller
 @RequestMapping("/api")
 public class CardController {
-	@Autowired 
-	private CardService cardService;
-	
-	@RequestMapping(value="/card/getAll",method=RequestMethod.GET)
-	@ResponseBody
-	public List<Card> getAllCard(){
-		return cardService.findAll();
-	}
-	@RequestMapping(value="/card",method=RequestMethod.GET)
-	@ResponseBody
-	public String card() {
-		return "card";
-	}
+    @Autowired
+    private CardService cardService;
+
+    @RequestMapping(value = "/card/getAll", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Card> getAllCard() {
+        return cardService.findAll();
+    }
 }

@@ -25,41 +25,47 @@ import com.app.repository.TradeRecordRepository;
 
 @Service
 public class TradeRecordService {
-	private static Logger Log=LoggerFactory.getLogger(TradeRecordService.class);
-	@Value("${pageSize.default}")
-	private int pageSize;
-	private TradeRecordRepository tradeRecordRepository;
-	
-	@Autowired
-	public TradeRecordService(TradeRecordRepository tradeRecordRepository) {
-		this.tradeRecordRepository=tradeRecordRepository;
-	}
-	public List<TradeRecord> findAll(){
-		int page=0,size=pageSize;
-		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
-		return tradeRecordRepository.findAll(pageable).getContent();
-	}
-	public List<TradeRecord> findByTrader(User trader){
-		int page=0,size=pageSize;
-		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
-		return tradeRecordRepository.findByTrader(trader.getId(), pageable);
-	}
-	
-	public List<TradeRecord> findByCard(Card card){
-		int page=0,size=pageSize;
-		Pageable pageable=PageRequest.of(page, size, Sort.by("createTime").descending());
-		return tradeRecordRepository.findByTradeCard(card, pageable);
-	}
-	public Optional<TradeRecord> findByTradeRecordId(Long id) {
-		return tradeRecordRepository.findById(id);
-	}
-	@Transactional
-	public TradeRecord saveTradeRecord(Trade sellTrade,Trade buyTrade,Double soldPrice) {
-		if(!sellTrade.isCompleted()&&!buyTrade.isCompleted()) {
-			TradeRecord tradeRecord=new TradeRecord(sellTrade.getTrader(), buyTrade.getTrader(), buyTrade.getTradeCard(), soldPrice, sellTrade, buyTrade);
-			Log.info("Save TradeRecord:"+sellTrade.getTrader().getName()+" "+buyTrade.getTrader().getName()+" "+buyTrade.getTradeCard().getName()+" "+soldPrice);
-			return tradeRecordRepository.save(tradeRecord);
-		}else
-			return null;
-	}
+    private static Logger Log = LoggerFactory.getLogger(TradeRecordService.class);
+    @Value("${pageSize.default}")
+    private int pageSize;
+    private TradeRecordRepository tradeRecordRepository;
+
+    @Autowired
+    public TradeRecordService(TradeRecordRepository tradeRecordRepository) {
+        this.tradeRecordRepository = tradeRecordRepository;
+    }
+
+    public List<TradeRecord> findAll() {
+        int page = 0, size = pageSize;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createTime").descending());
+        return tradeRecordRepository.findAll(pageable).getContent();
+    }
+
+    public List<TradeRecord> findByTrader(User trader) {
+        int page = 0, size = pageSize;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createTime").descending());
+        return tradeRecordRepository.findByTrader(trader.getId(), pageable);
+    }
+
+    public List<TradeRecord> findByCard(Card card) {
+        int page = 0, size = pageSize;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createTime").descending());
+        return tradeRecordRepository.findByTradeCard(card, pageable);
+    }
+
+    public Optional<TradeRecord> findByTradeRecordId(Long id) {
+        return tradeRecordRepository.findById(id);
+    }
+
+    @Transactional
+    public TradeRecord saveTradeRecord(Trade sellTrade, Trade buyTrade, Double soldPrice) {
+        if (!sellTrade.isCompleted() && !buyTrade.isCompleted()) {
+            TradeRecord tradeRecord = new TradeRecord(sellTrade.getTrader(), buyTrade.getTrader(),
+                    buyTrade.getTradeCard(), soldPrice, sellTrade, buyTrade);
+            Log.info("Save TradeRecord:" + sellTrade.getTrader().getName() + " " + buyTrade.getTrader().getName() + " "
+                    + buyTrade.getTradeCard().getName() + " " + soldPrice);
+            return tradeRecordRepository.save(tradeRecord);
+        } else
+            return null;
+    }
 }

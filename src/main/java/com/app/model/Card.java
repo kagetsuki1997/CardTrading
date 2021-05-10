@@ -1,7 +1,5 @@
 package com.app.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +19,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "cards")
 public class Card {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-	@Column(name="name",unique = true, nullable = false, length = 100)
+    @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
 }

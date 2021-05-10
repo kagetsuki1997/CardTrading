@@ -10,5 +10,6 @@ import com.app.model.Card;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     Card findByName(String cardName);
+
     Optional<Card> findById(Long id);
 }

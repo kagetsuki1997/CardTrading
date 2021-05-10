@@ -13,12 +13,16 @@ import com.app.model.Trade;
 import com.app.model.User;
 
 @Repository
-public interface TradeRepository extends JpaRepository<Trade, Long>{
-	Optional<Trade> findById(Long Id);
-	List<Trade> findByTrader(User trader,Pageable pageable);
-	List<Trade> findByTradeCard(Card Card,Pageable pageable);
-	@Query("select t from Trade t where t.trader.id != ?1 and t.tradeCard.id=?2 and t.action='sell' and t.price<=?3 and t.isCompleted=false order by t.price")
-	List<Trade> findBuyTrade(Long traderId,Long cardId,Double price);
-	@Query("select t from Trade t where t.trader.id != ?1 and t.tradeCard.id=?2 and t.action='buy' and t.price>=?3 and t.isCompleted=false order by t.price desc")
-	List<Trade> findSellTrade(Long traderId,Long cardId,Double price);
+public interface TradeRepository extends JpaRepository<Trade, Long> {
+    Optional<Trade> findById(Long Id);
+
+    List<Trade> findByTrader(User trader, Pageable pageable);
+
+    List<Trade> findByTradeCard(Card Card, Pageable pageable);
+
+    @Query("select t from Trade t where t.trader.id != ?1 and t.tradeCard.id=?2 and t.action='sell' and t.price<=?3 and t.isCompleted=false order by t.price")
+    List<Trade> findBuyTrade(Long traderId, Long cardId, Double price);
+
+    @Query("select t from Trade t where t.trader.id != ?1 and t.tradeCard.id=?2 and t.action='buy' and t.price>=?3 and t.isCompleted=false order by t.price desc")
+    List<Trade> findSellTrade(Long traderId, Long cardId, Double price);
 }

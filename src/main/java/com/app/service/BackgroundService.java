@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BackgroundService {
-	private static Logger Log=LoggerFactory.getLogger(BackgroundService.class);
-	@Autowired
-	private TradeService tradeService;
-	
-	@Scheduled(fixedRateString="${backgroundMakeAllDealInterval}")
+    private static Logger Log = LoggerFactory.getLogger(BackgroundService.class);
+    @Autowired
+    private TradeService tradeService;
+
+    @Scheduled(fixedRateString = "${backgroundMakeAllDealInterval}")
     public void backgroundMakeAllDeal() {
-		//Log.info("--Background MakeAllDeal");
-		try {
-			tradeService.makeAllDeal();
-		}catch(Exception e) {
-			Log.error(e.getMessage());
-		}
+        // Log.info("--Background MakeAllDeal");
+        try {
+            tradeService.makeAllDeal();
+        } catch (Exception e) {
+            Log.error(e.getMessage());
+        }
     }
 }

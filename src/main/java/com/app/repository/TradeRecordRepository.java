@@ -14,10 +14,11 @@ import com.app.model.TradeRecord;
 import com.app.model.User;
 
 @Repository
-public interface TradeRecordRepository extends JpaRepository<TradeRecord, Long>{
-	@Query(value="select * from TradeRecord where sellerId=?1 or buyerId=?1",nativeQuery=true)
-	List<TradeRecord> findByTrader(Long traderId,Pageable pageable);
-	List<TradeRecord> findByTradeCard(Card Card,Pageable pageable);
-	Optional<TradeRecord> findById(Long id);
-}
+public interface TradeRecordRepository extends JpaRepository<TradeRecord, Long> {
+    @Query(value = "select * from TradeRecord where sellerId=?1 or buyerId=?1", nativeQuery = true)
+    List<TradeRecord> findByTrader(Long traderId, Pageable pageable);
 
+    List<TradeRecord> findByTradeCard(Card Card, Pageable pageable);
+
+    Optional<TradeRecord> findById(Long id);
+}

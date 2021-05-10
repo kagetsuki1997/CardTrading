@@ -13,9 +13,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,45 +25,45 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tradeRecord")
 public class TradeRecord {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "sellerId")
-	private User seller;
-	
-	@ManyToOne
-	@JoinColumn(name = "buyerId")
-	private User buyer;
-	
-	@ManyToOne
-	@JoinColumn(name = "cardId")
-	private Card tradeCard;
-	
-	@Column(name= "soldPrice")
-	private Double soldPrice;
-	
-	@ManyToOne
-	@JoinColumn(name = "sellTradeId")
-	private Trade sellTrade;
-	
-	@ManyToOne
-	@JoinColumn(name = "buyTradeId")
-	private Trade buyTrade;
-	
-	@CreationTimestamp
-	@Column(name = "completeTime")
-	private Date completeTime;
-	
-	public TradeRecord(User seller,User buyer,Card tradeCard,Double soldPrice,Trade sellTrade,Trade buyTrade) {
-		this.seller=seller;
-		this.buyer=buyer;
-		this.tradeCard=tradeCard;
-		this.soldPrice=soldPrice;
-		this.sellTrade=sellTrade;
-		this.buyTrade=buyTrade;
-	}
+
+    @ManyToOne
+    @JoinColumn(name = "sellerId")
+    private User seller;
+
+    @ManyToOne
+    @JoinColumn(name = "buyerId")
+    private User buyer;
+
+    @ManyToOne
+    @JoinColumn(name = "cardId")
+    private Card tradeCard;
+
+    @Column(name = "soldPrice")
+    private Double soldPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "sellTradeId")
+    private Trade sellTrade;
+
+    @ManyToOne
+    @JoinColumn(name = "buyTradeId")
+    private Trade buyTrade;
+
+    @CreationTimestamp
+    @Column(name = "completeTime")
+    private Date completeTime;
+
+    public TradeRecord(User seller, User buyer, Card tradeCard, Double soldPrice, Trade sellTrade, Trade buyTrade) {
+        this.seller = seller;
+        this.buyer = buyer;
+        this.tradeCard = tradeCard;
+        this.soldPrice = soldPrice;
+        this.sellTrade = sellTrade;
+        this.buyTrade = buyTrade;
+    }
 
 }

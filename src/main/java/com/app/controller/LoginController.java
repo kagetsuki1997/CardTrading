@@ -18,22 +18,22 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value={"/login"}, method = RequestMethod.GET)
-    public ModelAndView login(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-    @RequestMapping(value={"/logout"}, method = RequestMethod.POST)
-    public ModelAndView logout(){
+    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+    public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
+    @RequestMapping(value = { "/logout" }, method = RequestMethod.POST)
+    public ModelAndView logout() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
-    public ModelAndView registration(){
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -43,13 +43,12 @@ public class LoginController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(User user, BindingResult bindingResult) {
-    	System.out.println("Registration!");
+        System.out.println("Registration!");
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByUserName(user.getName());
         if (userExists != null) {
-            bindingResult
-                    .rejectValue("userName", "error.user",
-                            "There is already a user registered with the user name provided");
+            bindingResult.rejectValue("userName", "error.user",
+                    "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
@@ -63,16 +62,15 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(){
+    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("/CardTrading/home");
         return modelAndView;
     }
-
 
 }
