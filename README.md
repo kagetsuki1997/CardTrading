@@ -2,6 +2,7 @@
 ## Requirement
 - Spring boot
 - jdk8
+- MySQL
 - Docker
 ## Installation
 Run by docker-compose
